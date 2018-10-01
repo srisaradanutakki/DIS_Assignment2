@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Assignment_2
@@ -14,9 +15,22 @@ namespace Assignment_2
     {
       decimal value = 0.0m;
 
-      // write your implementation here
+            // write your implementation here
+            if (!this.IsEmpty())
+            {
+                var stn = new StockNode();
+                stn = this.head;
+                value = value + stn.StockHolding.Holdings * stn.StockHolding.CurrentPrice;
 
-      return value;
+                do
+                {
+                    stn = stn.Next;
+                    value = value + stn.StockHolding.Holdings * stn.StockHolding.CurrentPrice;
+                }
+                while (stn.Next != null);
+            }
+
+            return value;
     }
 
     //param  (StockList) listToCompare     : StockList which has to comared for similarity index
@@ -28,6 +42,40 @@ namespace Assignment_2
       int similarityIndex = 0;
 
       // write your implementation here
+      var list1 = new List<string>();
+
+            if (!this.IsEmpty())
+            {
+                var stn = new StockNode();
+                stn = this.head;
+                list1.Add(stn.StockHolding.Symbol);
+
+                do
+                {
+                    stn = stn.Next;
+                    list1.Add(stn.StockHolding.Symbol);
+                }
+                while (stn.Next != null);
+            }
+
+            var list2 = new List<string>();
+
+            if (!listToCompare.IsEmpty())
+            {
+                var stn = new StockNode();
+                stn = listToCompare.head;
+                list2.Add(stn.StockHolding.Symbol);
+
+                do
+                {
+                    stn = stn.Next;
+                    list2.Add(stn.StockHolding.Symbol);
+                }
+                while (stn.Next != null);
+            }
+
+            var CommonList = list1.Intersect(list2);
+            similarityIndex = CommonList.Count();
 
       return similarityIndex;
     }
@@ -38,8 +86,23 @@ namespace Assignment_2
     //return type  : NA
     public void Print()
     {
-      // write your implementation here
+            // write your implementation here
 
-    }
+            if (!this.IsEmpty())
+            {
+                var stn = new StockNode();
+                stn = this.head;
+                Console.WriteLine(stn.StockHolding.ToString());
+                
+                do
+                {
+                    stn = stn.Next;
+                    Console.WriteLine(stn.StockHolding.ToString());
+                }
+                while (stn.Next != null);
+                
+            }
+
+        }
   }
 }
